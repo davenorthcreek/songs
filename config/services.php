@@ -40,4 +40,13 @@ return [
         ],
     ],
 
+    /*
+    | Acacha Llum services...
+    |
+    | See: https://github.com/acacha/llum
+    |
+    */
+    #llum_services
+
+
 ];
