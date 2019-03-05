@@ -6,6 +6,10 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Auth;
+use Log;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 /**
  * Class RegisterController
@@ -33,7 +37,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('adminlte::auth.register');
+        return view('auth.login');
     }
 
     /**
@@ -52,6 +56,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+
 
     /**
      * Get a validator for an incoming registration request.
@@ -76,16 +81,32 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
+    public function create(array $data)
     {
         $fields = [
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
+            'is_admin' => $data['is_admin'],
         ];
-        if (config('auth.providers.users.field', 'email') === 'username' && isset($data['username'])) {
+        if (config('auth.providers.users.field','email') === 'username' && isset($data['username'])) {
             $fields['username'] = $data['username'];
         }
-        return User::create($fields);
+        $user = User::create($fields);
+
+        /*
+        Create a jwt token for the use of the extension
+        it does this on each login, so that the token won't be stale when it's loaded by the extension
+        */
+        $token = JWTAuth::fromUser($user);
+        Log::debug("setting jwt token");
+        Log::debug($token);
+        $user->jwt_token = $token;
+        $user->save();
+        $user2 = JWTAuth::authenticate($token);
+        if ($user->id != $user2->id) {
+            dd($user2);
+        }
+        return $user;
     }
 }

@@ -15,7 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::auth();
+
 Route::group(['middleware' => 'auth'], function () {
+    Route::resource('user', 'UserController');
+    Route::post('/user_update/{id}', 'UserController@update');
+    Route::get('/delete_user/{id}', 'UserController@destroy');
     //    Route::get('/link1', function ()    {
 //        // Uses Auth Middleware
 //    });
