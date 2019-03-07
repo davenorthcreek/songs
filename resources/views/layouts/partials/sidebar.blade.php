@@ -37,9 +37,10 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">ADMIN MENU</li>
                     <li><a href="{{ url('/user')  }}">      <i class='fa fa-users'> </i>Users</a> </li>
+                    <li><a href="{{ url('/log-viewer') }}" target="_blank"><i class='fa fa-bug'> </i>Logs</a> </li>
                 </ul>
             @endif
-            
+
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
