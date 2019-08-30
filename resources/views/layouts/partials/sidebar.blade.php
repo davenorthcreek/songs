@@ -31,7 +31,6 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">{{ trans('adminlte_lang::message.header') }}</li>
             <!-- Optionally, you can add icons to the links -->
             @if (Auth::user()->is_admin)
                 <ul class="sidebar-menu" data-widget="tree">
@@ -40,7 +39,11 @@
                     <li><a href="{{ url('/log-viewer') }}" target="_blank"><i class='fa fa-bug'> </i>Logs</a> </li>
                 </ul>
             @endif
-
+            <li class="header">LINKS</li>
+            <li><a href="{{ url('/song')  }}">      <i class='fa fa-users'> </i>Songs</a> </li>
+            <li><a href="{{ url('/musicians')  }}">      <i class='fa fa-users'> </i>Musicians</a> </li>
+            <li><a href="{{ url('/services')  }}">      <i class='fa fa-users'> </i>Services</a> </li>
+            <li><a href="{{ url('/charts')  }}">      <i class='fa fa-users'> </i>Charts</a> </li>
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

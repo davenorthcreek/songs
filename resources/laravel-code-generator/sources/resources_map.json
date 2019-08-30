@@ -13,5 +13,10 @@
         "model-name": "playlists",
         "resource-file": "playlists.json",
         "table-name": "playlists"
+    },
+    {
+        "model-name": "Chart",
+        "resource-file": "charts.json",
+        "table-name": "charts"
     }
 ]

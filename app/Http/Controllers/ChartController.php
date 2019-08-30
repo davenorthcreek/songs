@@ -3,39 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Musician;
+use App\Song;
+use App\Chart;
 use Illuminate\Http\Request;
 use Exception;
 
-class MusicianController extends Controller
+class ChartController extends Controller
 {
 
     /**
-     * Display a listing of the musicians.
+     * Display a listing of the charts.
      *
      * @return Illuminate\View\View
      */
     public function index()
     {
-        $musicians = Musician::paginate(25);
+        $charts = Chart::with('song')->paginate(25);
 
-        return view('musicians.index', compact('musicians'));
+        return view('charts.index', compact('charts'));
     }
 
     /**
-     * Show the form for creating a new musician.
+     * Show the form for creating a new chart.
      *
      * @return Illuminate\View\View
      */
     public function create()
     {
+        $songs = Song::pluck('title','id')->all();
 
-
-        return view('musicians.create');
+        return view('charts.create', compact('songs'));
     }
 
     /**
-     * Store a new musician in the storage.
+     * Store a new chart in the storage.
      *
      * @param Illuminate\Http\Request $request
      *
@@ -47,10 +48,10 @@ class MusicianController extends Controller
 
             $data = $this->getData($request);
 
-            Musician::create($data);
+            Chart::create($data);
 
-            return redirect()->route('musicians.musician.index')
-                ->with('success_message', 'Musician was successfully added.');
+            return redirect()->route('charts.chart.index')
+                ->with('success_message', 'Chart was successfully added.');
         } catch (Exception $exception) {
 
             return back()->withInput()
@@ -59,7 +60,7 @@ class MusicianController extends Controller
     }
 
     /**
-     * Display the specified musician.
+     * Display the specified chart.
      *
      * @param int $id
      *
@@ -67,13 +68,13 @@ class MusicianController extends Controller
      */
     public function show($id)
     {
-        $musician = Musician::findOrFail($id);
+        $chart = Chart::with('song')->findOrFail($id);
 
-        return view('musicians.show', compact('musician'));
+        return view('charts.show', compact('chart'));
     }
 
     /**
-     * Show the form for editing the specified musician.
+     * Show the form for editing the specified chart.
      *
      * @param int $id
      *
@@ -81,14 +82,14 @@ class MusicianController extends Controller
      */
     public function edit($id)
     {
-        $musician = Musician::findOrFail($id);
+        $chart = Chart::findOrFail($id);
+        $songs = Song::pluck('title','id')->all();
 
-
-        return view('musicians.edit', compact('musician'));
+        return view('charts.edit', compact('chart','songs'));
     }
 
     /**
-     * Update the specified musician in the storage.
+     * Update the specified chart in the storage.
      *
      * @param int $id
      * @param Illuminate\Http\Request $request
@@ -101,11 +102,11 @@ class MusicianController extends Controller
 
             $data = $this->getData($request);
 
-            $musician = Musician::findOrFail($id);
-            $musician->update($data);
+            $chart = Chart::findOrFail($id);
+            $chart->update($data);
 
-            return redirect()->route('musicians.musician.index')
-                ->with('success_message', 'Musician was successfully updated.');
+            return redirect()->route('charts.chart.index')
+                ->with('success_message', 'Chart was successfully updated.');
         } catch (Exception $exception) {
 
             return back()->withInput()
@@ -114,7 +115,7 @@ class MusicianController extends Controller
     }
 
     /**
-     * Remove the specified musician from the storage.
+     * Remove the specified chart from the storage.
      *
      * @param int $id
      *
@@ -123,11 +124,11 @@ class MusicianController extends Controller
     public function destroy($id)
     {
         try {
-            $musician = Musician::findOrFail($id);
-            $musician->delete();
+            $chart = Chart::findOrFail($id);
+            $chart->delete();
 
-            return redirect()->route('musicians.musician.index')
-                ->with('success_message', 'Musician was successfully deleted.');
+            return redirect()->route('charts.chart.index')
+                ->with('success_message', 'Chart was successfully deleted.');
         } catch (Exception $exception) {
 
             return back()->withInput()
@@ -145,9 +146,11 @@ class MusicianController extends Controller
     protected function getData(Request $request)
     {
         $rules = [
-                'name' => 'required|string|min:1|max:191',
-            'email' => 'required|string|min:1|max:191',
-            'phone' => 'required|string|min:1|max:191',
+                'song_id' => 'required',
+            'type' => 'required|string|min:1|max:191',
+            'platform' => 'required|string|min:1|max:191',
+            'link' => 'required|string|min:1|max:191',
+            'key' => 'required|string|min:1|max:191',
         ];
 
         $data = $request->validate($rules);

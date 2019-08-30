@@ -1,50 +1,50 @@
-##Song
+## Song
 - Title
 - Songwriter
 - Performances (one to many)
 - Charts (possibly several)
 - Hymnal number (if relevant)
 
-##Playlist
+## Playlist
 - Date
 - SongUse
 
-##SongUse
+## SongUse
 - Song
 - Date
 
-##Musician
+## Musician
 - Name
 - Email
 - Phone
 - Skills (Many to Many)
 
-##Skill
+## Skill
 - Title
 - Description
 
-##MusicianSkills
+## MusicianSkills
 - Musician
 - Skill
 
-##Service
+## Service
 - Date (so SongList)
 - Roles (List of Musician/Skills serving that day)
 - Prelude (Which Musician is Responsible)
 - Offertory (Which Musician)
 - Special Music
 
-##Roles
+## Roles
 - Date
 - MusicianSkills
 
-##Performance
+## Performance
 - Song
 - Artist
 - Link (to Dropbox or S3)
 - Key (if known)
 
-##Chart
+## Chart
 - Song
 - Type (vocal, chords, lyrics, lead)
 - Link
