@@ -1,0 +1,17 @@
+[
+    {
+        "model-name": "musicians",
+        "resource-file": "musicians.json",
+        "table-name": "musicians"
+    },
+    {
+        "model-name": "services",
+        "resource-file": "services.json",
+        "table-name": "services"
+    },
+    {
+        "model-name": "playlists",
+        "resource-file": "playlists.json",
+        "table-name": "playlists"
+    }
+]
