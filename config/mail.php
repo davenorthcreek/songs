@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@highworthcharters.ca'),
-        'name' => env('MAIL_FROM_NAME', 'High Worth Charters'),
+        'address' => env('MAIL_FROM_ADDRESS', 'dave@blockhousehold.net'),
+        'name' => env('MAIL_FROM_NAME', 'Songs App by Databutler'),
     ],
 
     /*
